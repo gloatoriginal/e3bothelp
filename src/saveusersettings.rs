@@ -1,19 +1,31 @@
+pub fn CreateEmptyUsers() -> Users {
+    let users = Users {
+        accounts: Vec::new(),
+        characters: Vec::new(),
+        bots: Vec::new(),
+    };
+    users
+}
 
-pub fn UserCreate(GetInput: &dyn Fn() -> String) -> Users {
+pub fn UserCreate(GetInput: &dyn Fn() -> String, users: Users){
     //create mutable strings to assign for user settings struct
    
     println!("Please enter your Account name");
-    let mut a = GetInput();
+    let a = GetInput();
     println!("Please enter your Character name");
-    let mut c = GetInput();
-    let b = true;
+    let c = GetInput();
+    println!("Is this going to be a Bot Character? y or n default is y.");
+    let mut b = true;
+    let botCheck = GetInput();
+    if botCheck.trim() == "n" { b = false; }
+    else { b = true; }
 
     let user = User {
         account: String::from(a),
         character: String::from(c),
         bot: b,
     };
-    UserAdd(user)     
+    UserAdd(user, users);     
 }
 
 struct User{
@@ -22,24 +34,14 @@ struct User{
     bot: bool,
 }
 
-fn UserAdd(user: User) -> Users {
-    let mut accVec = Vec::new();
-    let mut chaVec = Vec::new();
-    let mut botVec = Vec::new();
-    accVec.push(user.account);
-    chaVec.push(user.character);
-    botVec.push(user.bot);
-
-    let users = Users{
-        accounts: accVec,
-        characters: chaVec,
-        bots: botVec,
-   };
-    users
+fn UserAdd(user: User, mut users: Users){
+    users.accounts.push(user.account); 
+    users.characters.push(user.character);
+    users.bots.push(user.bot);
 }
 
 pub struct Users{
-    pub accounts: Vec<String>,
-    pub characters: Vec<String>,
+    accounts: Vec<String>,
+    characters: Vec<String>,
     bots: Vec<bool>,
 }
