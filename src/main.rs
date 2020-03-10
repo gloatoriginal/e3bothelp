@@ -1,18 +1,30 @@
-mod mainmenu;
-mod saveusersettings;
-use saveusersettings::UserCreate;
-use saveusersettings::CreateEmptyUsers;
-mod generalfunctions;
+#![allow(non_snake_case)]
+#![allow(while_true)]
 
-fn main(){ 
-    let staticUser = CreateEmptyUsers();
-    while true{
-        let whatToDo = mainmenu::MainMenu(&generalfunctions::GetInput);
+
+mod displayaccounts;
+mod mainmenu;
+mod generalfunctions;
+mod saveusersettings;
+
+use displayaccounts::Display;
+use mainmenu::MainMenu;
+use generalfunctions::GetInput;
+use saveusersettings::UserCreate;
+use saveusersettings::InitialCreate;
+
+
+fn main(){
+    //create mutable user to make Users struct
+    let mut user = InitialCreate(); 
+    //create a forever while loop
+    while true {
+        let whatToDo = MainMenu(&GetInput);
         if whatToDo == 1 {
-           println!("Coming soon"); 
-        }
-        if whatToDo == 2 { 
-            UserCreate(&generalfunctions::GetInput, staticUser);
+           Display(&user);
+        } else if whatToDo == 2 {
+            //make new user with account/character/bot info
+            user = UserCreate(&GetInput, user); 
         } else { break; }
     }
 }
