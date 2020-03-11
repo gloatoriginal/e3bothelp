@@ -5,26 +5,26 @@
 mod displayaccounts;
 mod mainmenu;
 mod generalfunctions;
-mod saveusersettings;
+mod usersettings;
 
 use displayaccounts::Display;
 use mainmenu::MainMenu;
 use generalfunctions::GetInput;
-use saveusersettings::UserCreate;
-use saveusersettings::InitialCreate;
+use usersettings::UserCreate;
+use usersettings::InitialCreate;
 
 
 fn main(){
     //create mutable user to make Users struct
-    let mut user = InitialCreate(); 
+    let mut user = InitialCreate();
     //create a forever while loop
     while true {
         let whatToDo = MainMenu(&GetInput);
         if whatToDo == 1 {
-           Display(&user);
+            Display(&user);
         } else if whatToDo == 2 {
             //make new user with account/character/bot info
-            user = UserCreate(&GetInput, user); 
+            user = UserCreate(&GetInput, user);
         } else { break; }
     }
 }
