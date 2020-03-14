@@ -20,10 +20,18 @@ fn main(){
     let mut user = ReadUser();
     //create a forever while loop
     while true {
+        //this is the main menu that pops up
         let whatToDo = MainMenu(&GetInput);
-        if whatToDo == 1 { Display(&user); } 
+        //this is going to show saved characters/accounts
+        if whatToDo == 1 { Display(&user); }
+        //start of creating users
         else if whatToDo == 2 { user = UserCreate(&GetInput, user); }
-        else if whatToDo == 3 {  StartCharacters(); } 
+        //end of creating users
+        //this will start the characters(still in production)
+        else if whatToDo == 3 {
+            //StartCharacters();
+            StartCharacters(&user.accounts, &user.characters, &user.bots);
+        }
         else { break; }
     }
 }

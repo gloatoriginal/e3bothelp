@@ -10,10 +10,10 @@ pub fn UserCreate(GetInput: &dyn Fn() -> String, mut user: Users) -> Users{
     let accInput = GetInput();
     println!("Please enter your Character name");
     let charInput = GetInput();
-    if user.accounts.iter().any(|i| i == &accInput.trim()) || user.characters.iter().any(|i| i == &charInput.trim()){ 
+    if user.accounts.iter().any(|i| i == &accInput.trim()) || user.characters.iter().any(|i| i == &charInput.trim()){
         println!("Sorry that account or character already exists");
-        user 
-    } else { 
+        user
+    } else {
         user.accounts.push(accInput.to_string());
         user.characters.push(charInput.to_string());
         println!("Is this going to be a Bot Character? y or n default is y.");
@@ -22,7 +22,6 @@ pub fn UserCreate(GetInput: &dyn Fn() -> String, mut user: Users) -> Users{
         SaveUser(&user);
         user
     }
-    
 }//create user function end
 
 //read user settings files
