@@ -1,17 +1,26 @@
+use std::fs::{File};
 use std::process::Command;
+use std::io::Write;
 
 
 pub fn StartCharacters(accounts: &Vec<String>, characters: &Vec<String>, bots: &Vec<String>){
-    startThis();
+    for i in accounts.iter(){
+        writeToBatch();
+        startThis();
+    }
+    
 }
-/*
-pub fn StartCharacters(){
-    startThis(String::from("cmd"));
-}*/
 
+
+fn writeToBatch(){
+    let data = "tasklist /nh /fi \"WINDOWTITLE eq Gloat\" | find /i \"eqgame.exe\" > nul ||(start \"Gloat\" /d \"C:\\games\\Everquest\\TGCMAIN\\everquest_rof2\" \"C:\\games\\Everquest\\TGCMAIN\\everquest_rof2\\eqgame.exe\" patchme -h /login:Devwarrior)";
+    let mut file = File::create("characters.bat")
+        .expect("unable to create accounts file");
+    writeln!(file, "{}", data);
+}
 
 fn startThis(){
-    //let command = "tasklist /nh /fi \"WINDOWTITLE eq Gloatt\" |find /i \"eqgame.exe\" > nul ||(start \"Gloatt\" /d \"C:\\games\\Everquest\\TGCMAIN\\everquest_rof2\" \"C:\\games\\Everquest\\TGCMAIN\\everquest_rof2\\eqgame.exe\" patchme -h /login:devwarrior)";
+    let command = "start characters.bat\nexit";
     println!("{}", command);
     Command::new("cmd")
         .args(&["/C", command])

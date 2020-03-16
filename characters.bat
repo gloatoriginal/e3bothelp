@@ -1,0 +1,1 @@
+tasklist /nh /fi "WINDOWTITLE eq Gloat" | find /i "eqgame.exe" > nul ||(start "Gloat" /d "C:\games\Everquest\TGCMAIN\everquest_rof2" "C:\games\Everquest\TGCMAIN\everquest_rof2\eqgame.exe" patchme -h /login:Devwarrior)
