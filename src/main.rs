@@ -7,6 +7,7 @@ mod mainmenu;
 mod generalfunctions;
 mod usersettings;
 mod win;
+mod linux;
 
 use mainmenu::MainMenu;
 use generalfunctions::GetInput;
@@ -29,8 +30,9 @@ fn main(){
         //this will start the characters(still in production)
         else if whatToDo == 3 {
             if cfg!(target_os = "windows"){ win::StartCharacters(&user.accounts, &user.characters, &user.bots); }
+            else if cfg!(target_os = "linux"){ linux::StartCharacters(&user.accounts, &user.characters, &user.bots); }
             else { println!("Coming soon!"); }
-            
+
         }
         else { break; }
     }
