@@ -28,8 +28,9 @@ fn main(){
         //end of creating users
         //this will start the characters(still in production)
         else if whatToDo == 3 {
-            //StartCharacters();
-            win::StartCharacters(&user.accounts, &user.characters, &user.bots);
+            if cfg!(target_os = "windows"){ win::StartCharacters(&user.accounts, &user.characters, &user.bots); }
+            else { println!("Coming soon!"); }
+            
         }
         else { break; }
     }
