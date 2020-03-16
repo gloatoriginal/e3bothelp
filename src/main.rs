@@ -13,7 +13,6 @@ use generalfunctions::GetInput;
 use usersettings::UserCreate;
 use usersettings::ReadUser;
 use usersettings::Display;
-use win::StartCharacters;
 
 fn main(){
     //create mutable user to make Users struct
@@ -30,7 +29,7 @@ fn main(){
         //this will start the characters(still in production)
         else if whatToDo == 3 {
             //StartCharacters();
-            StartCharacters(&user.accounts, &user.characters, &user.bots);
+            win::StartCharacters(&user.accounts, &user.characters, &user.bots);
         }
         else { break; }
     }
