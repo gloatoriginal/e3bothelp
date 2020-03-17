@@ -3,20 +3,29 @@ use std::process::Command;
 use std::io::Write;
 
 
-pub fn StartCharacters(accounts: &Vec<String>, characters: &Vec<String>, bots: &Vec<String>){
-        writeToBatch(&accounts, &characters);
+pub fn StartCharacters(accounts: &Vec<String>, characters: &Vec<String>, bots: &Vec<String>,
+                        mainDir: &String, botDir: &String){
+        writeToBatch(&accounts, &characters, &bots, &mainDir, &botDir);
         startMainBatch();
     
 }
 
-
-fn writeToBatch(accounts: &Vec<String>, characters: &Vec<String>){
+fn writeToBatch(accounts: &Vec<String>, characters: &Vec<String>, bots: &Vec<String>,  
+                mainDir: &String, botDir: &String){
     let mut file = File::create("characters.bat")
             .expect("unable to write to characters batch");
     let mut i = 0;
     for character in characters.iter(){
-        let data = format!("tasklist /nh /fi \"WINDOWTITLE eq {}\" | find /i \"eqgame.exe\" > nul ||(start \"{}\" /d \"C:\\games\\Everquest\\TGCMAIN\\everquest_rof2\" \"C:\\games\\Everquest\\TGCMAIN\\everquest_rof2\\eqgame.exe\" patchme -h /login:{})", character, character, accounts[i]);
+        if bots[i] == "false"{
+        let data = format!("tasklist /nh /fi \"WINDOWTITLE eq {}\" | find /i \"eqgame.exe\" > nul ||(start \"{}\" /d \"{}\" \"{}\\eqgame.exe\" patchme -h /login:{})", 
+                            character, character, mainDir.trim(), mainDir.trim(), accounts[i]);
         writeln!(file, "{}", data);
+    } else {
+        let data = format!("tasklist /nh /fi \"WINDOWTITLE eq {}\" | find /i \"eqgame.exe\" > nul ||(start \"{}\" /d \"{}\" \"{}\\eqgame.exe\" patchme -h /login:{})", 
+                            character, character, botDir.trim(), botDir.trim(), accounts[i]);
+        writeln!(file, "{}", data);
+    }
+        
         i+=1;
         if i%5 == 0 { writeln!(file, "PING localhost -n 5 >NUL"); }
         if i%6 == 0 { println!("Starting group {}", i/6); }
