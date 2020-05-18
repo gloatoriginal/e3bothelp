@@ -1,7 +1,7 @@
 use std::fs::{File};
 use std::process::Command;
 use std::io::Write;
-
+extern crate num_cpus;
 
 pub fn StartCharacters(accounts: &Vec<String>, characters: &Vec<String>, bots: &Vec<String>,
                         mainDir: &String, botDir: &String){
@@ -30,6 +30,10 @@ fn writeToBatch(accounts: &Vec<String>, characters: &Vec<String>, bots: &Vec<Str
         if i%5 == 0 { writeln!(file, "PING localhost -n 5 >NUL"); }
         if i%6 == 0 { println!("Starting group {}", i/6); }
     }
+    writeln!(file, "PING localhost -n 10 >NUL");
+    let data = format!("powershell \"$process=GET-PROCESS eqgame; foreach ($i in $process) {{$i.ProcessorAffinity={}}}\"", 
+                        i32::pow(2, (num_cpus::get() as u32))-1);
+    writeln!(file, "{}", data);
     writeln!(file, "exit");
 
 }

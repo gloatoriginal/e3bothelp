@@ -12,4 +12,6 @@ tasklist /nh /fi "WINDOWTITLE eq devwiz" | find /i "eqgame.exe" > nul ||(start "
 PING localhost -n 5 >NUL
 tasklist /nh /fi "WINDOWTITLE eq devmonk" | find /i "eqgame.exe" > nul ||(start "devmonk" /d "C:\games\Everquest\TGCALTS\everquest_rof2" "C:\games\Everquest\TGCALTS\everquest_rof2\eqgame.exe" patchme -h /login:devmonk)
 tasklist /nh /fi "WINDOWTITLE eq devnecro" | find /i "eqgame.exe" > nul ||(start "devnecro" /d "C:\games\Everquest\TGCALTS\everquest_rof2" "C:\games\Everquest\TGCALTS\everquest_rof2\eqgame.exe" patchme -h /login:devnecro)
+PING localhost -n 10 >NUL
+powershell "$process=GET-PROCESS eqgame; foreach ($i in $process) {$i.ProcessorAffinity=16777215}"
 exit
